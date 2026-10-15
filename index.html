@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><title>CIVORA</title>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="theme-color" content="#0e2630"><title>CIVORA</title>
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
@@ -34,9 +34,20 @@ canvas{display:block;touch-action:none;position:fixed;inset:0;width:100%;height:
 #set{position:fixed;z-index:20;left:50%;top:50%;transform:translate(-50%,-50%);display:none;flex-direction:column;gap:8px;padding:16px;width:min(300px,84vw)}
 #set button{font:600 13px Sora,system-ui;color:var(--t);background:rgba(255,255,255,.08);border:0;border-radius:12px;padding:13px;text-align:left}#set button.p{background:var(--a);color:#16232b;text-align:center}
 #bar button{font-size:8px;letter-spacing:0}#tray button svg{display:block;margin:0 auto 3px}
+html,body{overscroll-behavior:none;touch-action:none;position:fixed;inset:0;width:100%}
+#portrait{position:fixed;inset:0;z-index:50;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:#0e2630;color:var(--t);font-size:15px;text-align:center;padding:20px}
+@media (orientation:portrait) and (max-width:700px){#portrait{display:flex}}
+@media (orientation:landscape) and (max-height:520px){
+#start{gap:8px}#start h1{font-size:44px}#start p{margin:0 0 6px}#start>svg{display:none}.btn{padding:10px 18px;width:260px}
+#top{right:96px;padding:5px 10px;top:calc(env(safe-area-inset-top,0px) + 4px)}
+#bar{left:auto;right:calc(env(safe-area-inset-right,0px) + 4px);top:calc(env(safe-area-inset-top,0px) + 4px);bottom:calc(env(safe-area-inset-bottom,0px) + 4px);flex-direction:column;width:78px;padding:4px}
+#bar button{padding:3px 0;font-size:8px}
+#tray{left:6px;right:96px;bottom:calc(env(safe-area-inset-bottom,0px) + 6px)}#tray button{padding:8px 4px}
+#ctl{right:96px;bottom:70px}#info{left:8px;bottom:70px}#tut{top:calc(env(safe-area-inset-top,0px) + 50px)}}
 </style></head><body>
 <svg style="display:none"><symbol id="i-build" viewBox="0 0 24 24"><path d="M6 21V4l12 3M6 8h12M18 7v5M4 21h6"/></symbol><symbol id="i-road" viewBox="0 0 24 24"><path d="M8 3 5 21M16 3l3 18M12 4v3M12 11v3M12 18v3"/></symbol><symbol id="i-house" viewBox="0 0 24 24"><path d="M4 11l8-7 8 7M6 10v10h12V10M10 20v-5h4v5"/></symbol><symbol id="i-shop" viewBox="0 0 24 24"><path d="M4 9l1-5h14l1 5M4 9h16M5 9v11h14V9M9 20v-6h6v6"/></symbol><symbol id="i-factory" viewBox="0 0 24 24"><path d="M3 20V10l6 4v-4l6 4V6h3v14zM3 20h18"/></symbol><symbol id="i-park" viewBox="0 0 24 24"><path d="M12 3a5 5 0 0 0-4 8 5 5 0 0 0 4 6 5 5 0 0 0 4-6 5 5 0 0 0-4-8M12 17v4"/></symbol><symbol id="i-office" viewBox="0 0 24 24"><path d="M7 21V4h10v17M10 8h1M13 8h1M10 12h1M13 12h1M10 16h1M13 16h1M4 21h16"/></symbol><symbol id="i-demo" viewBox="0 0 24 24"><path d="M5 7h14M9 7V4h6v3M7 7l1 13h8l1-13M10 11v6M14 11v6"/></symbol><symbol id="i-rot" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-3-6M20 4v5h-5"/></symbol><symbol id="i-ok" viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></symbol><symbol id="i-no" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol><symbol id="i-gear" viewBox="0 0 24 24"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol><symbol id="i-city" viewBox="0 0 24 24"><path d="M3 21V9l5-3v15M8 21V4l7 3v14M15 21v-9l6 2v7M3 21h18"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><path d="M7 11V8a5 5 0 0 1 10 0v3M5 11h14v10H5z"/></symbol><symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-9"/></symbol><symbol id="i-bus" viewBox="0 0 24 24"><path d="M5 5h14v12H5zM5 11h14M8 20v-3M16 20v-3M8 14h.5M15.5 14h.5"/></symbol><symbol id="i-cross" viewBox="0 0 24 24"><path d="M9 4h6v5h5v6h-5v5H9v-5H4V9h5z"/></symbol><symbol id="i-play" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></symbol></svg><div id="start"><svg class="ic" style="width:56px;height:56px;color:#ffb547"><use href="#i-city"/></svg><h1>CIVORA</h1><p>Build. Manage. Evolve.</p><button class="btn p" id="newb"><svg class="ic" style=""><use href="#i-city"/></svg>YANGI SHAHAR</button><button class="btn" id="contb" style="display:none"><svg class="ic" style=""><use href="#i-play"/></svg>DAVOM ETTIRISH</button><button class="btn" id="setb"><svg class="ic" style=""><use href="#i-gear"/></svg>SOZLAMALAR</button></div>
 <div id="set" class="glass"></div>
+<div id="portrait"><svg class="ic" style="width:56px;height:56px"><use href="#i-rot"/></svg><b>Telefonni gorizontal holatga buring</b></div>
 <div id="top" class="glass"><b class="br">CIVORA</b><span><small>AHOLI</small><b id="pop">0</b></span><span><small>ISH</small><b id="jobs">0</b></span><span><small>MABLAG‘ · <i id="day"></i></small><b id="money">$0</b><small id="bal"></small></span><button class="gb" id="gear"><svg class="ic" style=""><use href="#i-gear"/></svg></button></div>
 <div id="tut" class="glass"></div><div id="toast" class="glass"></div>
 <div id="info" class="glass"></div>
@@ -44,6 +55,7 @@ canvas{display:block;touch-action:none;position:fixed;inset:0;width:100%;height:
 <div id="tray" class="glass"></div>
 <div id="bar" class="glass"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 <script>
 const N=40,H=N/2,$=id=>document.getElementById(id),cw=c=>c-H+.5,idx=(x,y)=>y*N+x,inb=(x,y)=>x>=0&&y>=0&&x<N&&y<N;
 const rngf=s=>()=>{s|=0;s=s+0x6D2B79F5|0;let t=Math.imul(s^s>>>15,1|s);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
@@ -98,7 +110,7 @@ const E1=[],E2=[],E3=[],E4=[];for(let q=0;q<V;q++){const t=q/SUB-H;E1.push([t,HT
 edge(E1,[0,0,-1]);edge(E2,[0,0,1]);edge(E3,[-1,0,0]);edge(E4,[1,0,0]);
 const wgm=new THREE.BufferGeometry();wgm.setAttribute('position',new THREE.Float32BufferAttribute(WP,3));wgm.setAttribute('normal',new THREE.Float32BufferAttribute(WN,3));wgm.setAttribute('color',new THREE.Float32BufferAttribute(WC,3));scene.add(new THREE.Mesh(wgm,new THREE.MeshLambertMaterial({vertexColors:true})));
 const tb=new THREE.Mesh(new THREE.PlaneGeometry(300,300),new THREE.MeshLambertMaterial({color:0xd8dfe3}));tb.rotation.x=-Math.PI/2;tb.position.y=-1.52;tb.receiveShadow=true;scene.add(tb);
-const rin=new THREE.InstancedMesh(new THREE.ConeGeometry(.025,.45,4),new THREE.MeshLambertMaterial({color:0x6f9a3c}),260),stn=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.09,0),new THREE.MeshLambertMaterial({color:0x8d8f8c,flatShading:true}),70),M=new THREE.Matrix4(),Q=new THREE.Quaternion(),Eu=new THREE.Euler(),V3=new THREE.Vector3(),SC=new THREE.Vector3();let nr=0,ns=0;
+const rin=new THREE.InstancedMesh(new THREE.ConeGeometry(.025,.45,4),new THREE.MeshLambertMaterial({color:0x6f9a3c}),260),stn=new THREE.InstancedMesh(new THREE.IcosahedronGeometry(.09,0),new THREE.MeshStandardMaterial({color:0x8d8f8c,flatShading:true,roughness:1}),70),M=new THREE.Matrix4(),Q=new THREE.Quaternion(),Eu=new THREE.Euler(),V3=new THREE.Vector3(),SC=new THREE.Vector3();let nr=0,ns=0;
 for(let j=2;j<V-2;j+=2)for(let i=2;i<V-2;i+=2){const h=HT[j*V+i];if(h>-.14||h<-.06)continue;const r=R1(),x=i/SUB-H+(R1()-.5)*.2,z=j/SUB-H+(R1()-.5)*.2;
 if(r<.35&&nr<260){const sc=.7+R1()*.8;M.compose(V3.set(x,h+.2*sc,z),Q.setFromEuler(Eu.set((R1()-.5)*.3,R1()*6,(R1()-.5)*.3)),SC.set(sc,sc,sc));rin.setMatrixAt(nr++,M)}
 else if(r>.93&&ns<70){const sc=.6+R1()*1.1;M.compose(V3.set(x,h+.03,z),Q.setFromEuler(Eu.set(R1()*3,R1()*3,R1()*3)),SC.set(sc,sc*.7,sc));stn.setMatrixAt(ns++,M)}}
@@ -298,12 +310,25 @@ if(has){$('contb').style.display='flex';load()||seed()}else seed();g.pitch=.62;g
 function begin(){City.started=true;$('start').style.opacity=0;setTimeout(()=>$('start').remove(),700);g.pitch=.95;g.dist=26;g.tx=g.tz=0;setTool('build');hud();tut()}
 $('newb').onclick=()=>{reset();seed();save();begin()};$('contb').onclick=begin;
 const setEl=$('set');function applyQ(){R.setPixelRatio(S.q?Math.min(devicePixelRatio,2):1);R.setSize(innerWidth,innerHeight);sun.castShadow=!!S.q}
-function setUI(){setEl.innerHTML='<b>'+T('set')+'</b><button data-a="q">'+T('gfx')+': '+T(S.q?'hi':'lo')+'</button><button data-a="c">'+T('cyc')+': '+T(S.cyc?'on':'off')+'</button><button data-a="s">'+T('cams')+': '+S.cam+'×</button><button>'+T('lang')+': '+T('uz')+'</button><button class="p" data-a="x">'+T('close')+'</button>'}
-setEl.onclick=e=>{const b=e.target.closest('button'),a=b&&b.dataset.a;if(a==='q'){S.q^=1;applyQ()}if(a==='c')S.cyc^=1;if(a==='s')S.cam=S.cam===1?1.5:S.cam===1.5?.6:1;if(a==='x'){setEl.style.display='none';save();return}if(a)setUI()};
+function setUI(){setEl.innerHTML='<b>'+T('set')+'</b><button data-a="q">'+T('gfx')+': '+T(S.q?'hi':'lo')+'</button><button data-a="c">'+T('cyc')+': '+T(S.cyc?'on':'off')+'</button><button data-a="s">'+T('cams')+': '+S.cam+'×</button><button>'+T('lang')+': '+T('uz')+'</button><button data-a="f">To‘liq ekran</button><button class="p" data-a="x">'+T('close')+'</button>'}
+setEl.onclick=e=>{const b=e.target.closest('button'),a=b&&b.dataset.a;if(a==='q'){S.q^=1;applyQ()}if(a==='c')S.cyc^=1;if(a==='f')goFull();if(a==='s')S.cam=S.cam===1?1.5:S.cam===1.5?.6:1;if(a==='x'){setEl.style.display='none';save();return}if(a)setUI()};
 $('gear').onclick=$('setb').onclick=()=>{setUI();setEl.style.display='flex'};
 setInterval(save,8000);addEventListener('pagehide',save);
 /* ---------- loop ---------- */
 const clock=new THREE.Clock();function resize(){R.setSize(innerWidth,innerHeight);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()}addEventListener('resize',resize);resize();
 let wt0=0,ht=0;function frame(){const dt=Math.min(clock.getDelta(),.05);if(!City.started)g.yaw+=dt*.06;order.forEach(n=>Systems[n].update(dt));hud();if((ht+=dt)>.5){ht=0;if(selCell)infoAt(...selCell);if(City.started)tut()}camUpdate(dt);if((wt0+=dt)>.06){animWater(clock.elapsedTime);wt0=0}R.render(scene,cam);requestAnimationFrame(frame)}
-setTool('build');frame();
+function goFull(){try{const d=document.documentElement,f=d.requestFullscreen||d.webkitRequestFullscreen;if(f&&!document.fullscreenElement&&!document.webkitFullscreenElement){const lock=()=>{try{screen.orientation&&screen.orientation.lock&&screen.orientation.lock('landscape').catch(()=>{})}catch(e){}},p=f.call(d);p&&p.then?p.then(lock).catch(()=>{}):lock()}}catch(e){}}
+['click','touchend'].forEach(ev=>addEventListener(ev,goFull,{once:true}));
+document.addEventListener('fullscreenchange',()=>setTimeout(resize,100));
+addEventListener('beforeunload',e=>{if(City.started){save();e.preventDefault();e.returnValue=''}});
+/* ---------- GLB model yuklash (assets/models/*.glb); fayl bo'lmasa eski usulda ishlaydi ---------- */
+const MD={};
+function prep(gl,h){const o=gl.scene,b=new THREE.Box3().setFromObject(o),k=h/(b.getSize(new THREE.Vector3()).y||1);o.scale.multiplyScalar(k);b.setFromObject(o);const c=b.getCenter(new THREE.Vector3());o.position.set(-c.x,-b.min.y,-c.z);const w=new THREE.Group();w.add(o);w.traverse(m=>{if(m.isMesh){m.castShadow=m.receiveShadow=true}});return w}
+const nearW=(x,y)=>{for(let a=-2;a<=2;a++)for(let b=-2;b<=2;b++)if(inb(x+a,y+b)&&water[idx(x+a,y+b)])return true;return false};
+function scatter(m,n,near){let k=0;for(let t=0;t<900&&k<n;t++){const x=Math.random()*N|0,y=Math.random()*N|0,i=idx(x,y);if(water[i]||occ[i]!==0||Math.hypot(x-20,y-20)<4||(near&&!nearW(x,y)))continue;const o=m.clone();o.scale.setScalar(.7+Math.random()*.7);o.rotation.y=Math.random()*6.28;o.position.set(cw(x)+(Math.random()-.5)*.6,0,cw(y)+(Math.random()-.5)*.6);scene.add(o);(trees[i]=trees[i]||[]).push(o);k++}}
+async function loadModels(){if(!THREE.GLTFLoader)return;const GL=new THREE.GLTFLoader(),L={oak:['tree_oak_1',1.1],pine:['tree_pine_1',1.3],bush:['bush_1',.4],rock:['rock_1',.3]};
+for(const k in L){const g=await new Promise(r=>GL.load('assets/models/'+L[k][0]+'.glb',r,undefined,()=>r(null)));if(g)MD[k]=prep(g,L[k][1])}
+const T=[MD.oak,MD.pine].filter(Boolean);if(T.length)trees.forEach(a=>a&&a.forEach(g=>{g.clear();g.add(T[Math.random()*T.length|0].clone())}));
+if(MD.bush)scatter(MD.bush,70,false);if(MD.rock)scatter(MD.rock,35,true)}
+setTool('build');frame();loadModels();
 </script></body></html>
